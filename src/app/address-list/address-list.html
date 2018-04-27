@@ -1,0 +1,32 @@
+<!--
+  Generated template for the AddressListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>address-list</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+<div class="wr-well">
+  <h1>Travel where you want</h1>
+  <h6>Make sure emergency services can always find you.
+    Select your current location below.</h6>
+    <ion-card *ngFor="let address of addresses | async">
+      <ion-item>
+        <ion-icon item-right name="locate" (click)="selectLocation(address)">
+        </ion-icon>
+        <ion-icon item-left large [name]="address.icon"></ion-icon>
+        <strong color="dark">{{address.name}}</strong>
+        <p>{{address}}<br /> Last Selected: {{address.lastUsed}}</p>
+      </ion-item>
+    </ion-card>
+  </div>
+
+</ion-content>

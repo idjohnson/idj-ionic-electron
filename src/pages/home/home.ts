@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, FabContainer } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -11,4 +11,13 @@ export class HomePage {
 
   }
 
+  gotoSetup(fab: FabContainer) {
+    fab.close();
+    this.navCtrl.push('SetupPage', {}, { animate: true, direction: 'forward' });
+  }
+
+  gotoLocations(fab: FabContainer) {
+    fab.close();
+    this.navCtrl.setRoot('AddressListPage');
+  }
 }
