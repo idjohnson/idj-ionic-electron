@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { AddressServiceProvider } from './core/address-service/address-service';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { AddressServiceProvider } from './core/address-service/address-service';
     HomePage
   ],
   imports: [
+    AgmCoreModule.forRoot(),
     BrowserModule,
     IonicModule.forRoot(MyApp)
   ],
