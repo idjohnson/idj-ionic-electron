@@ -1,10 +1,12 @@
 {
   "name": "dispatcher",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Isaac Johnson",
+  "homepage": "http://freshbrewed.science/",
+  "main": "server/main.js",
   "private": true,
   "scripts": {
+    "start": "electron .",
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
@@ -35,6 +37,7 @@
   "devDependencies": {
     "@agm/core": "^1.0.0-beta.2",
     "@ionic/app-scripts": "3.1.9",
+    "electron": "^1.8.6",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project"
