@@ -5,6 +5,7 @@
   "homepage": "http://freshbrewed.science/",
   "main": "server/main.js",
   "private": true,
+  "productName": "Sentry Dispatcher",
   "scripts": {
     "start": "electron .",
     "clean": "ionic-app-scripts clean",

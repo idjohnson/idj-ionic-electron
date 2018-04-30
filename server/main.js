@@ -1,14 +1,24 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, Menu} = require('electron')
 const path = require('path')
 const url = require('url')
+const menuManager = require('./menu-manager')
 
 let win
 const iconPath = path.join(__dirname, 'images/icon.png')
 
-app.on('ready', createWindow)
+app.on('ready', appReady)
 
-if (app.dock) {
-  app.dock.setIcon(iconPath)
+function appReady() {
+  menuManager.onAbout = () => {console.log('You Really Clicked About...')}
+  const menu = menuManager.build()
+  Menu.setApplicationMenu(menu)
+
+  //Only for Mac
+  if (app.dock) {
+    app.dock.setIcon(iconPath)
+  }
+
+  createWindow()
 }
 
 function createWindow () {
