@@ -43,6 +43,18 @@ class MenuManager {
     return menu;
   }
 
+  buildTrayMenu() {
+    const menu = new Menu()
+
+    menu.append(new MenuItem({label: 'Map', click: this.onMap}))
+    menu.append(new MenuItem({label: 'View Locations', click: this.onLocations}))
+    menu.append(new MenuItem({type: 'separator'}))
+    menu.append(this.locationMenu)
+    menu.append(new MenuItem({type: 'separator'}))
+    menu.append(new MenuItem({role: 'quit'}))
+    return menu
+  }
+
   isMac() {
     return (process.platform === 'darwin')
   }

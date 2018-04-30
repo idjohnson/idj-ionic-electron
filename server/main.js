@@ -1,10 +1,11 @@
-const {app, BrowserWindow, Menu} = require('electron')
+const {app, BrowserWindow, Menu, Tray } = require('electron')
 const path = require('path')
 const url = require('url')
 const menuManager = require('./menu-manager')
 
 let win
-const iconPath = path.join(__dirname, 'images/icon.png')
+let tray
+const iconPath = path.join(__dirname, 'images')
 
 app.on('ready', appReady)
 
@@ -15,15 +16,30 @@ function appReady() {
 
   //Only for Mac
   if (app.dock) {
-    app.dock.setIcon(iconPath)
+    app.dock.setIcon(path.join(iconPath, 'icon.png'))
   }
 
+  initTray()
   createWindow()
+}
+
+
+function initTray() {
+  if (process.platform === 'darwin') {
+    tray = new Tray(path.join(iconPath, 'mac-tray.png'))
+    tray.setPressedImage(path.join(iconPath, 'mac-tray-pressed.png'))
+  } else {
+    tray = new Tray(path.join(iconPath, 'icon.ico'))
+  }
+
+  tray.setToolTip(app.getName())
+  tray.setContextMenu(menuManager.buildTrayMenu())
 }
 
 function createWindow () {
   // create the browser window
-  win = new BrowserWindow({width: 1200, height: 800, title: 'Dispatcher', icon: iconPath})
+  const windowIcon = process.platform === 'darwin' ? 'icon.png' : 'icon.ico'
+  win = new BrowserWindow({width: 1200, height: 800, title: 'Dispatcher', icon: path.join(iconPath, windowIcon)})
 
   win.loadURL(url.format({
     pathname: path.join(__dirname, '../www/index.html'),
