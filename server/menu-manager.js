@@ -192,7 +192,7 @@ class MenuManager {
       },{
         role: 'hide'
       },{
-        type: 'hideothers'
+        role: 'hideothers'
       },{
         role: 'unhide'
       },{
