@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { AddressServiceProvider } from './core/address-service/address-service';
 import { AgmCoreModule } from '@agm/core';
+import { NgxElectronModule } from 'ngx-electron';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AgmCoreModule } from '@agm/core';
   imports: [
     AgmCoreModule.forRoot(),
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    NgxElectronModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

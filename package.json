@@ -12,7 +12,8 @@
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+    "ionic:serve": "ionic-app-scripts serve",
+    "mon": "nodemon --exec \"npm start\""
   },
   "dependencies": {
     "@angular/animations": "5.2.10",
@@ -39,6 +40,8 @@
     "@agm/core": "^1.0.0-beta.2",
     "@ionic/app-scripts": "3.1.9",
     "electron": "^1.8.6",
+    "ngx-electron": "^1.0.4",
+    "nodemon": "^1.17.3",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project"
