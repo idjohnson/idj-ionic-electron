@@ -14,12 +14,11 @@ export class HomePage {
   };
   located = false;
 
-  constructor(public navCtrl: NavController, private navParams: NavParams) {
+  constructor(public navCtrl: NavController, navParams: NavParams) {
     this.address = navParams.data.address;
     if (this.address) {
       this.located = true;
     }
-
   }
 
   getLatitude(): number {
@@ -39,4 +38,5 @@ export class HomePage {
     fab.close();
     this.navCtrl.setRoot('AddressListPage');
   }
+ 
 }
