@@ -1,20 +1,62 @@
 import { Injectable } from '@angular/core';
+import 'rxjs';
+import 'rxjs/add/operator/map';
+import { SetupService } from '../setup-service';
+import { DispatcherService } from '../dispatcher-service';
+import { ElectronIpcService } from '../electronipc-service';
 import { Address } from '../address';
+
 
 @Injectable()
 export class AddressServiceProvider {
+  // private addresses: Address[];
 
-  private addresses: Address[] = [];
-  constructor() {
-    console.log('Hello AddressServiceProvider Provider');
-
-    this.addresses.push(new Address(1, 'YMCA', '2175 Radio Dr', '', 'Woodbury', 'MN', '55125', 'stopwatch', '', '44.916907', '-92.932066'));
-    this.addresses.push(new Address(2, 'ThomsonReuters', '610 Opperman Dr', '', 'Eagan', 'MN', '55123', 'hammer', '', '44.824317', '-93.112396'));
-    this.addresses.push(new Address(3, 'Home', '1310 Schooner Ct', '', 'Woodbury', 'MN', '55125', 'home', '', '44.930511', '-92.911950'));
+  constructor(
+    private setupService: SetupService,
+    private dispatcher: DispatcherService,
+    private ipc: ElectronIpcService) {
   }
 
-  fetchAll() : Promise<Address[]>{
-    var p = Promise.resolve<Address[]>(this.addresses);
-    return p;
+  // Async version
+  async fetchAll(): Promise<Address[]> {
+    let person = await this.setupService.fetchPerson();
+    let addresses = await this.dispatcher
+      .getAddressesByPhone(person.phone);
+    this.ipc.updateLocationsMenu(addresses);
+    return addresses;
+  }
+
+  // Non async version
+  // fetchAll(): Promise<Address[]> {
+  //   return this.setupService.fetchPerson()
+  //   .then(person => {
+  //     return this.dispatcher.getAddressesByPhone(person.phone)
+  //     .then(addresses => {
+  //       this.ipc.updateLocationsMenu(addresses);
+  //       return addresses;
+  //     });
+  //   });
+  // }
+
+  validate(address: Address): Promise<Address> {
+    return this.dispatcher.validateAddress(address);
+  }
+
+  async add(address: Address): Promise<Address> {
+    let person = await this.setupService.fetchPerson();
+    address.endpoint = {
+      callerName: person.name,
+      did: person.phone
+    };
+
+    return this.dispatcher.addAddress(address);
+  }
+
+  provision(address: Address): Promise<boolean> {
+    return this.dispatcher.provisionAddress(address);
+  }
+
+  remove(address: Address): Promise<boolean> {
+    return this.dispatcher.removeAddress(address);
   }
 }
