@@ -15,14 +15,14 @@ import { DispatcherService } from './core/dispatcher-service';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StorageServiceProvider } from './core/storage-service/storage-service';
- 
+
 @NgModule({
   declarations: [
     MyApp,
     HomePage
   ],
   imports: [
-    AgmCoreModule.forRoot({ apiKey: 'AIzaSyCDg2AO8zi10AeMzUbr-tukCYUbxGV5_0c' }),
+    AgmCoreModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpModule,
