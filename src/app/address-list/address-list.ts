@@ -11,6 +11,7 @@ import { AddressServiceProvider } from '../core/address-service/address-service'
 })
 export class AddressListPage {
   public addresses: Address[];
+  provisionedAddressId: string = '';
 
   constructor(
     private addressService: AddressServiceProvider,
@@ -28,7 +29,9 @@ export class AddressListPage {
     loading.present();
 
     try {
-      this.addresses = await this.addressService.fetchAll();
+      [this.addresses, this.provisionedAddressId] = await Promise.all([
+        this.addressService.fetchAll(),
+        this.addressService.getProvisionedAddressId()]);
     } catch (err) {
       console.error(err);
     } finally {
@@ -55,7 +58,7 @@ export class AddressListPage {
     let loading = this.loadingController.create({ content: 'Saving Address...' });
     loading.present();
     try {
-      await this.addressService.add(address);
+      await this.addressService.save(address);
       await this.loadSavedAddresses();
     } catch (err) {
       console.error(err);

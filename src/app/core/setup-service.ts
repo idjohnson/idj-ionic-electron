@@ -1,23 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Person } from './person';
+import { StorageServiceProvider } from "./storage-service/storage-service";
 
 @Injectable()
 export class SetupService {
-  // Configuration Values hard-coded until we write Storage code.
-  private person: Person = new Person('16035551212', 'Michael Callaghan');
-
-  constructor() {
-  }
+  constructor(private storage: StorageServiceProvider) { }
 
   fetchPerson(): Promise<Person> {
-    var p = Promise.resolve<Person>(this.person);
-    return p;
+    return this.storage.getPerson();
   }
 
-  setPerson(person: Person): Promise<Person> {
-    this.person.name = person.name;
-    this.person.phone = person.phone;
-    return this.fetchPerson();
+  setPerson(person: Person): Promise<any> {
+    return this.storage.setPerson(person);
   }
 }
 

@@ -1,12 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
+import { ElectronService } from 'ngx-electron';
+import { AddressServiceProvider } from './core/address-service/address-service';
+import { StorageServiceProvider } from './core/storage-service/storage-service';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { ElectronService } from 'ngx-electron';
-
 import { HomePage } from '../pages/home/home';
-import { AddressServiceProvider } from './core/address-service/address-service';
 import { Address } from './core/address';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -19,8 +20,9 @@ export class MyApp {
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    private electron: ElectronService) {
-    
+    private electron: ElectronService,
+    private storage: StorageServiceProvider) {
+
     platform
       .ready()
       .then(() => this.onReady())
@@ -40,9 +42,14 @@ export class MyApp {
       console.log('Electron shell detected.');
       this.electron.ipcRenderer.on('onMap', () => this.nav.setRoot(HomePage));
       this.electron.ipcRenderer.on('onLocations', () => this.nav.setRoot('AddressListPage'));
+      this.electron.ipcRenderer.on('onPrefs', () => this.nav.setRoot('SetupPage'));
       this.electron.ipcRenderer.on('onProvision', async (evt, address: Address) => {
         await this.addressService.provision(address)
         this.nav.setRoot(HomePage, { address })
+      });
+      this.electron.ipcRenderer.on('license', async (evt, license) => {
+        console.log(license);
+        await this.storage.setLicense(license);
       });
     }
   }
