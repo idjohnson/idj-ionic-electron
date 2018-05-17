@@ -59,7 +59,14 @@ function createSplashScreen() {
     frame: false
   })
 
-  splashScreen.loadURL('http://localhost:8100/assets/images/sentrylitered.png')
+  // splashScreen.loadURL('http://localhost:8100/assets/images/sentrylitered.png')
+  splashScreen.loadURL(url.format({
+    pathname: path.join(__dirname,
+      '../www/assets/images/sentrylitered.png'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
 }
 
 function initTray() {
@@ -101,12 +108,12 @@ function createWindow() {
     })
 
     // Load the index.html of the app.
-    win.loadURL('http://localhost:8100')
-    // win.loadURL(url.format({
-    //   pathname: path.join(__dirname, '../www/index.html'),
-    //   protocol: 'file:',
-    //   slashes: true
-    // }))
+    // win.loadURL('http://localhost:8100')
+    win.loadURL(url.format({
+      pathname: path.join(__dirname, '../www/index.html'),
+      protocol: 'file:',
+      slashes: true
+    }))
 
     win.once('ready-to-show', () => {
       if (!win.isVisible()) {
